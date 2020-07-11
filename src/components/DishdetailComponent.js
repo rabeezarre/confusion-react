@@ -35,21 +35,12 @@ class DishDetail extends Component {
                     <h4>Comments</h4>
                     <ul className="list-unstyled">
                         { comments.map((oneComment)=> {
-                                function formatDate(string){
-                                    let options = { year: 'numeric', month: 'short', day: 'numeric' };
-                                    return new Date(string).toLocaleDateString([],options);
-                                }
                                 return (
                                     <li key={oneComment.id}>
                                         <p>{oneComment.comment}</p>
-                                        <p>-- {oneComment.author} , {formatDate(oneComment.date)}</p>
+                                        <p>-- {oneComment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(oneComment.date)))}</p>
                                     </li>
                                 )
-                                // return ([
-                                //         <li key = {oneComment.id} className="mb-2">{oneComment.comment}</li>,
-                                //         <li key = {oneComment.id} className="mb-2">-- {oneComment.author}, {formatDate(oneComment.date)}</li>
-                                //     ]
-                                // );
                             }
                         )
                         }
@@ -65,13 +56,15 @@ class DishDetail extends Component {
     }
 
     render() {
-        const dish = this.props.selectedDish;
+        const dish = this.props.dish;
 
         if (dish != null){
             return (
-                <div className="row">
-                    {this.renderDish(dish)}
-                    {this.renderComments(dish.comments)}
+                <div className="container">
+                    <div className="row">
+                        {this.renderDish(dish)}
+                        {this.renderComments(dish.comments)}
+                    </div>
                 </div>
             );
         }

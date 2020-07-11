@@ -10,13 +10,15 @@ class DishDetail extends Component {
     renderDish(dish) {
         if (dish != null){
             return (
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <div className="col-12 col-md-5 m-1">
+                    <Card>
+                        <CardImg top width="100%" src={dish.image} alt={dish.name}/>
+                        <CardBody>
+                            <CardTitle>{dish.name}</CardTitle>
+                            <CardText>{dish.description}</CardText>
+                        </CardBody>
+                    </Card>
+                </div>
             );
         }
         else {
@@ -29,7 +31,7 @@ class DishDetail extends Component {
     renderComments(comments){
         if (comments != null){
             return (
-                <div>
+                <div className="col-12 col-md-5 m-1">
                     <h4>Comments</h4>
                     <ul className="list-unstyled">
                         { comments.map((oneComment)=> {
@@ -37,16 +39,20 @@ class DishDetail extends Component {
                                     let options = { year: 'numeric', month: 'short', day: 'numeric' };
                                     return new Date(string).toLocaleDateString([],options);
                                 }
-
-                                return ([
-                                        <li>{oneComment.comment}</li>,
-                                        <li>-- {oneComment.author}, {formatDate(oneComment.date)}</li>
-                                    ]
-                                );
+                                return (
+                                    <li key={oneComment.id}>
+                                        <p>{oneComment.comment}</p>
+                                        <p>-- {oneComment.author} , {formatDate(oneComment.date)}</p>
+                                    </li>
+                                )
+                                // return ([
+                                //         <li key = {oneComment.id} className="mb-2">{oneComment.comment}</li>,
+                                //         <li key = {oneComment.id} className="mb-2">-- {oneComment.author}, {formatDate(oneComment.date)}</li>
+                                //     ]
+                                // );
                             }
                         )
                         }
-
                     </ul>
                 </div>
             );
@@ -59,15 +65,13 @@ class DishDetail extends Component {
     }
 
     render() {
-        if (this.props.selectedDish != null){
+        const dish = this.props.selectedDish;
+
+        if (dish != null){
             return (
                 <div className="row">
-                    <div  className="col-12 col-md-5 m-1">
-                        {this.renderDish(this.props.selectedDish)}
-                    </div>
-                    <div  className="col-12 col-md-5 m-1">
-                        {this.renderComments(this.props.selectedDish.comments)}
-                    </div>
+                    {this.renderDish(dish)}
+                    {this.renderComments(dish.comments)}
                 </div>
             );
         }

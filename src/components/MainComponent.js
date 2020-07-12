@@ -28,24 +28,12 @@ class Main extends Component {
                     </div>
                 </Navbar>
                 <Menu dishes = {this.state.dishes}
-                      onCLick = {(dishId) => this.onDishSelect(dishId)}/>
+                      onClick = {(dishId) => this.onDishSelect(dishId)}/>
                 <DishDetail
                     dish = {this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
             </div>
         );
     }
 }
-
-// function App() {
-//   return (
-//       <div className="App">
-//         <Navbar dark color="primary">
-//           <div className="container">
-//             <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
-//           </div>
-//         </Navbar>
-//       </div>
-//   );
-// }
 
 export default Main;
